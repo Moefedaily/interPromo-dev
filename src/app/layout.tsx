@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 
+
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -15,8 +16,19 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`bg-custom-grey w-full ${inter.className}`}>{children}</body>
+   <html lang="fr">
+      <head>
+        <link rel="shortcut icon" href="/images/favicon.ico" />
+        <link rel="shortcut icon" href="/favicon.ico" />
+        <link rel="manifest" href="/manifest.json"></link>
+        <link
+          href="https://fonts.googleapis.com/css2?family=Roboto:wght@400&display=swap"
+          rel="stylesheet"
+        />
+      </head>
+      <body className="font-sans bg-custom-grey">{children}</body>
     </html>
   );
 }
+
+
