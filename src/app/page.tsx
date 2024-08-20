@@ -1,11 +1,15 @@
-import Image from "next/image";
 
-export default function Home() {
-  return (
-    <main className="flex items-center justify-between p-24">
-        <div className="flex w-full">
-          <h1>Page d'accueil</h1>
-        </div>
-    </main>
-  );
+"use client"
+import Image from "next/image";
+import { Header } from "./Components/header/page";
+const Seoul = ()  =>{
+return (
+   <main className="flex items-center justify-between p-24">
+  <Header></Header>
+      <main className="flex items-center justify-between p-24">
+  </main>
+)
+
 }
+
+export default Seoul
