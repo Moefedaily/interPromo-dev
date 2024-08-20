@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+const defaultTheme = require('tailwindcss/defaultTheme');
 
 const config: Config = {
   content: [
@@ -18,8 +19,10 @@ const config: Config = {
       'custom-grey': '#333333',
       'custom-pink': '#FF8DDC',
       }, 
+      
     },
   },
   plugins: [],
 };
+
 export default config;
