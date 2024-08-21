@@ -3,9 +3,9 @@
 import { HeadersAdapter } from "next/dist/server/web/spec-extension/adapters/headers";
 import { Header } from "../Components/header/page";
 import { useRouter } from "next/navigation";
-import Seoul from "../page";
 
-const connection = ()  =>{
+
+const connexion = ()  =>{
    const { push } = useRouter()
 return (
    <main className='bg-custom-grey'>
@@ -18,4 +18,4 @@ return (
 
 }
 
-export default Seoul
+export default connexion

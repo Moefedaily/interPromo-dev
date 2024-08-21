@@ -5,7 +5,7 @@ import { Header } from "../Components/header/page";
 import { useRouter } from "next/navigation";
 import Seoul from "../page";
 
-const réservation = ()  =>{
+const reservation = ()  =>{
    const { push } = useRouter()
 return (
    <main className='bg-custom-grey'>
@@ -18,4 +18,4 @@ return (
 
 }
 
-export default Seoul
+export default reservation
