@@ -12,11 +12,11 @@ return (
     <Header></Header>
       <section className="flex flex-col justify-center items-center m-8">
         <h2 className="text-5xl font-bold m-16">Connexion</h2>
-        <input className="bg-custom-grey  border border-white border-2 p-2 m-4
+        <input className="bg-custom-grey  border border-white border-2 py-2 px-16 m-4
          rounded-md" type="text" id="username" placeholder="Identifient" name="username" required></input>
-        <input className="bg-custom-grey  border border-white p-2 border-2 p-2 m-4
+        <input className="bg-custom-grey  border border-white p-2 border-2 py-2  px-16 m-4
          rounded-md" type="password" placeholder="Mot de passe" id="password" name="password" required></input>
-        <button className="bg-white text-black rounded-md px-8 py-4 m-8" type="submit">Se connecter</button>
+        <button className="bg-white text-black rounded-md px-8 py-2 m-8" type="submit">Se connecter</button>
   
       </section>
     </main> 
