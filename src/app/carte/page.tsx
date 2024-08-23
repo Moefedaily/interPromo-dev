@@ -23,7 +23,7 @@ return (
         </select>
       </section>
       <section className="flex flex-wrap  p-24">
-        <div className="w-1/4 p-4">
+        <div className="sm:w-1/2 md:w-1/3 lg:w-1/4 p-4">
           <div >
             <div className=" flex justify-center items-center ">
              <img className="shadow-lg size-4/5 shadow-custom-pink rounded-lg" src="Guabao_bulgogi.png" alt="" />
@@ -37,7 +37,7 @@ return (
           </div>
         </div>
 
-        <div className="w-1/4 p-4">
+        <div className="sm:w-1/2 md:w-1/3 lg:w-1/4 p-4">
           <div >
             <div className=" flex justify-center items-center ">
              <img className="shadow-lg size-4/5 shadow-custom-pink rounded-lg" src="Guabao_bulgogi.png" alt="" />
@@ -50,7 +50,7 @@ return (
             <p className="mt-4">Burger Asiatique à base de brioche de farine de riz, Poulet, Laitue, Carotte Marinée, Oignon Rouge, Mayonnaise Légèrement Pimentée, Cacahuètes, Coriandre</p>
           </div>
         </div>
-        <div className="w-1/4 p-4">
+        <div className="sm:w-1/2 md:w-1/3 lg:w-1/4 p-4">
           <div >
             <div className=" flex justify-center items-center ">
              <img className="shadow-lg size-4/5 shadow-custom-pink rounded-lg" src="Guabao_bulgogi.png" alt="" />
@@ -63,7 +63,7 @@ return (
             <p className="mt-4">Burger Asiatique à base de brioche de farine de riz, Poulet, Laitue, Carotte Marinée, Oignon Rouge, Mayonnaise Légèrement Pimentée, Cacahuètes, Coriandre</p>
           </div>
         </div>
-        <div className="w-1/4 p-4">
+        <div className="sm:w-1/2 md:w-1/3 lg:w-1/4 p-4">
           <div >
             <div className=" flex justify-center items-center ">
              <img className="shadow-lg size-4/5 shadow-custom-pink rounded-lg" src="Guabao_bulgogi.png" alt="" />
@@ -76,7 +76,7 @@ return (
             <p className="mt-4">Burger Asiatique à base de brioche de farine de riz, Poulet, Laitue, Carotte Marinée, Oignon Rouge, Mayonnaise Légèrement Pimentée, Cacahuètes, Coriandre</p>
           </div>
         </div>
-        <div className="w-1/4 p-4">
+        <div className="sm:w-1/2 md:w-1/3 lg:w-1/4 p-4">
           <div >
             <div className=" flex justify-center items-center ">
              <img className="shadow-lg size-4/5 shadow-custom-pink rounded-lg" src="Guabao_bulgogi.png" alt="" />
