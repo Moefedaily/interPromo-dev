@@ -1,7 +1,6 @@
 "use client"
-
-import React from 'react'
-
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from "next/navigation";
 import { AdminHeader } from '../Components/adminHeader/page';
 
@@ -9,6 +8,16 @@ import { AdminHeader } from '../Components/adminHeader/page';
 
 const adminCarte = ()  =>{
    const { push } = useRouter()
+   const [mealList, setMealList] = useState([])
+  
+   useEffect(() => {
+    axios
+    .get("https://127.0.0.1:8000/api/meals")
+    .then((res:any) => {
+        setMealList(res.data["meal"]);
+    });
+   }, [])
+
 return (
    <main className='bg-custom-grey'>
     <AdminHeader></AdminHeader>
@@ -20,6 +29,43 @@ return (
             
         </div>  
         <div className="cards text-white flex-raw flex flex-wrap content-between justify-center items-center">
+            {mealList && 
+                mealList.map((meal:any) => {
+                    return (
+                        <div 
+                            key={meal.id}
+                            className="card w-1/5 border-2 rounded-md m-5 margin-auto flex justify-center items-center flex-col p-2"
+                        >
+                            <div className="picture w-4/5 border-2 rounded-md p-1 w-100 m-1">
+                                <img src={meal.picture} className=""/>
+                            </div>
+
+                            <div className="id w-4/5 border-2 rounded-md p-1 w-100 m-1">
+                                <p>Id</p>
+                                <p>{meal.id}</p>
+                            </div>
+
+                            <div className="title w-4/5 border-2 rounded-md p-1 w-100 m-1">
+                                <p>Nom</p>
+                                <p>{meal.name}</p>
+                            </div>
+
+                            <div className="price w-4/5 border-2 rounded-md p-1 w-100 m-1">
+                                <p>Prix</p>
+                                <p>{meal.price}</p>
+                            </div>
+
+                            <div className="description w-4/5 border-2 rounded-md p-1 w-100 m-1">
+                                <p>Description</p>
+                                <p>{meal.description}</p>
+                            </div>
+
+                        </div>
+
+                    )
+                })}
+            
+            
             <div className="card w-1/5 border-2 rounded-md m-5 margin-auto flex justify-center items-center flex-col p-2">
                 <div className="id w-4/5 border-2 rounded-md p-1 w-100 m-1">
                     <p>Id</p>
