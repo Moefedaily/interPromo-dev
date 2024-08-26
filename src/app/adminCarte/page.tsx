@@ -3,20 +3,33 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useRouter } from "next/navigation";
 import { AdminHeader } from '../Components/adminHeader/page';
+import { MealProps } from '../Utils/types';
 
 
 
 const adminCarte = ()  =>{
    const { push } = useRouter()
-   const [mealList, setMealList] = useState([])
+   const [mealList, setMealList] = useState([]);
+   const [editingMeal, setEditingMeal] = useState<Meal | null>(null);
+   const [newMeal, setNewMeal] = useState<CreateMealDto>({
+    name: "",
+    description: "",
+    price: 0,
+    picture: "",
+  });
+
   
    useEffect(() => {
     axios
     .get("https://127.0.0.1:8000/api/meals")
     .then((res:any) => {
-        setMealList(res.data["meal"]);
+        setMealList(res.data["meals"]);
     });
+    const handleEdit = (meal: Meal) => {
+        setEditingMeal(meal);
+    };
    }, [])
+
 
 return (
    <main className='bg-custom-grey'>
@@ -30,35 +43,44 @@ return (
         </div>  
         <div className="cards text-white flex-raw flex flex-wrap content-between justify-center items-center">
             {mealList && 
-                mealList.map((meal:any) => {
+                mealList.map((meals:MealProps) => {
                     return (
                         <div 
-                            key={meal.id}
+                            key={meals.id}
                             className="card w-1/5 border-2 rounded-md m-5 margin-auto flex justify-center items-center flex-col p-2"
                         >
                             <div className="picture w-4/5 border-2 rounded-md p-1 w-100 m-1">
-                                <img src={meal.picture} className=""/>
+                                <img src={meals.picture} className=""/>
                             </div>
 
                             <div className="id w-4/5 border-2 rounded-md p-1 w-100 m-1">
                                 <p>Id</p>
-                                <p>{meal.id}</p>
+                                <p>{meals.id}</p>
                             </div>
 
                             <div className="title w-4/5 border-2 rounded-md p-1 w-100 m-1">
                                 <p>Nom</p>
-                                <p>{meal.name}</p>
+                                <p>{meals.name}</p>
                             </div>
 
                             <div className="price w-4/5 border-2 rounded-md p-1 w-100 m-1">
                                 <p>Prix</p>
-                                <p>{meal.price}</p>
+                                <p>{meals.price}</p>
                             </div>
 
                             <div className="description w-4/5 border-2 rounded-md p-1 w-100 m-1">
                                 <p>Description</p>
-                                <p>{meal.description}</p>
+                                <p>{meals.description}</p>
                             </div>
+
+                            <button 
+                            onClick={editingMeal}
+                            className="bg-custom-pink flex w-2/4 border-2 border-custom-pink rounded-md p-1 m-1 text-custom-grey justify-center">Modifier</button>
+                            <button 
+                            onClick={() => {
+                                push(`/api/meal/${meals.id}/delete`)
+                            }} 
+                            className="bg-gray-400 border-2 flex w-2/4 border-gray-400 text-custom-grey rounded-md p-1 m-1 text-custom-grey border-gray-400 justify-center">Supprimer</button>
 
                         </div>
 
@@ -66,190 +88,7 @@ return (
                 })}
             
             
-            <div className="card w-1/5 border-2 rounded-md m-5 margin-auto flex justify-center items-center flex-col p-2">
-                <div className="id w-4/5 border-2 rounded-md p-1 w-100 m-1">
-                    <p>Id</p>
-                    <p></p>
-                </div>
-                <div className="title w-4/5 border-2 rounded-md p-1 w-100 m-1">
-                    <p>Titre</p>
-                    <p></p>
-                </div>
-                <div className="price w-4/5 border-2 rounded-md p-1 w-100 m-1">
-                    <p>Prix</p>
-                    <p></p>
-                </div>
-                <div className="description w-4/5  border-2 rounded-md p-1 w-100 m-1">
-                    <p>Description</p>
-                    <p></p>
-                </div>
-                <div className="pt-2 w-full flex justify-center items-center flex-col">
-                    <button className="bg-custom-pink flex w-2/4 border-2 border-custom-pink rounded-md p-1 m-1 text-custom-grey justify-center">Sauvegarder</button>
-                    <button className="bg-gray-400 border-2 flex w-2/4 border-gray-400 text-custom-grey rounded-md p-1 m-1 text-custom-grey border-gray-400 justify-center">Supprimer</button>    
-                </div>
-            </div>
-
-            <div className="card w-1/5 border-2 rounded-md m-5 margin-auto flex justify-center items-center flex-col p-2">
-                <div className="id w-4/5 border-2 rounded-md p-1 w-100 m-1">
-                    <p>Id</p>
-                    <p></p>
-                </div>
-                <div className="title w-4/5 border-2 rounded-md p-1 w-100 m-1">
-                    <p>Titre</p>
-                    <p></p>
-                </div>
-                <div className="price w-4/5 border-2 rounded-md p-1 w-100 m-1">
-                    <p>Prix</p>
-                    <p></p>
-                </div>
-                <div className="description w-4/5  border-2 rounded-md p-1 w-100 m-1">
-                    <p>Description</p>
-                    <p></p>
-                </div>
-                <div className="pt-2 w-full flex justify-center items-center flex-col">
-                    <button className="bg-custom-pink flex w-2/4 border-2 border-custom-pink rounded-md p-1 m-1 text-custom-grey justify-center">Sauvegarder</button>
-                    <button className="bg-gray-400 border-2 flex w-2/4 border-gray-400 text-custom-grey rounded-md p-1 m-1 text-custom-grey border-gray-400 justify-center">Supprimer</button>    
-                </div>
-            </div>
-
-            <div className="card w-1/5 border-2 rounded-md m-5 margin-auto flex justify-center items-center flex-col p-2">
-                <div className="id w-4/5 border-2 rounded-md p-1 w-100 m-1">
-                    <p>Id</p>
-                    <p></p>
-                </div>
-                <div className="title w-4/5 border-2 rounded-md p-1 w-100 m-1">
-                    <p>Titre</p>
-                    <p></p>
-                </div>
-                <div className="price w-4/5 border-2 rounded-md p-1 w-100 m-1">
-                    <p>Prix</p>
-                    <p></p>
-                </div>
-                <div className="description w-4/5  border-2 rounded-md p-1 w-100 m-1">
-                    <p>Description</p>
-                    <p></p>
-                </div>
-                <div className="pt-2 w-full flex justify-center items-center flex-col">
-                    <button className="bg-custom-pink flex w-2/4 border-2 border-custom-pink rounded-md p-1 m-1 text-custom-grey justify-center">Sauvegarder</button>
-                    <button className="bg-gray-400 border-2 flex w-2/4 border-gray-400 text-custom-grey rounded-md p-1 m-1 text-custom-grey border-gray-400 justify-center">Supprimer</button>    
-                </div>
-            </div>
-
-            <div className="card w-1/5 border-2 rounded-md m-5 margin-auto flex justify-center items-center flex-col p-2">
-                <div className="id w-4/5 border-2 rounded-md p-1 w-100 m-1">
-                    <p>Id</p>
-                    <p></p>
-                </div>
-                <div className="title w-4/5 border-2 rounded-md p-1 w-100 m-1">
-                    <p>Titre</p>
-                    <p></p>
-                </div>
-                <div className="price w-4/5 border-2 rounded-md p-1 w-100 m-1">
-                    <p>Prix</p>
-                    <p></p>
-                </div>
-                <div className="description w-4/5  border-2 rounded-md p-1 w-100 m-1">
-                    <p>Description</p>
-                    <p></p>
-                </div>
-                <div className="pt-2 w-full flex justify-center items-center flex-col">
-                    <button className="bg-custom-pink flex w-2/4 border-2 border-custom-pink rounded-md p-1 m-1 text-custom-grey justify-center">Sauvegarder</button>
-                    <button className="bg-gray-400 border-2 flex w-2/4 border-gray-400 text-custom-grey rounded-md p-1 m-1 text-custom-grey border-gray-400 justify-center">Supprimer</button>    
-                </div>
-            </div>
-
-            <div className="card w-1/5 border-2 rounded-md m-5 margin-auto flex justify-center items-center flex-col p-2">
-                <div className="id w-4/5 border-2 rounded-md p-1 w-100 m-1">
-                    <p>Id</p>
-                    <p></p>
-                </div>
-                <div className="title w-3/4 border-2 rounded-md p-1 w-100 m-1">
-                    <p>Titre</p>
-                    <p></p>
-                </div>
-                <div className="price w-3/4 border-2 rounded-md p-1 w-100 m-1">
-                    <p>Prix</p>
-                    <p></p>
-                </div>
-                <div className="description w-3/4  border-2 rounded-md p-1 w-100 m-1">
-                    <p>Description</p>
-                    <p></p>
-                </div>
-                <div className="pt-2 w-full flex justify-center items-center flex-col">
-                    <button className="bg-custom-pink flex w-2/4 border-2 border-custom-pink rounded-md p-1 m-1 text-custom-grey justify-center">Sauvegarder</button>
-                    <button className="bg-gray-400 border-2 flex w-2/4 border-gray-400 text-custom-grey rounded-md p-1 m-1 text-custom-grey border-gray-400 justify-center">Supprimer</button>    
-                </div>
-            </div>
-
-            <div className="card w-1/5 border-2 rounded-md m-5 margin-auto flex justify-center items-center flex-col p-2">
-                <div className="id w-3/4 border-2 rounded-md p-1 w-100 m-1">
-                    <p>Id</p>
-                    <p></p>
-                </div>
-                <div className="title w-3/4 border-2 rounded-md p-1 w-100 m-1">
-                    <p>Titre</p>
-                    <p></p>
-                </div>
-                <div className="price w-3/4 border-2 rounded-md p-1 w-100 m-1">
-                    <p>Prix</p>
-                    <p></p>
-                </div>
-                <div className="description w-3/4  border-2 rounded-md p-1 w-100 m-1">
-                    <p>Description</p>
-                    <p></p>
-                </div>
-                <div className="pt-2 w-full flex justify-center items-center flex-col">
-                    <button className="bg-custom-pink flex w-2/4 border-2 border-custom-pink rounded-md p-1 m-1 text-custom-grey justify-center">Sauvegarder</button>
-                    <button className="bg-gray-400 border-2 flex w-2/4 border-gray-400 text-custom-grey rounded-md p-1 m-1 text-custom-grey border-gray-400 justify-center">Supprimer</button>    
-                </div>
-            </div>
-
-            <div className="card w-1/5 border-2 rounded-md m-5 margin-auto flex justify-center items-center flex-col p-2">
-                <div className="id w-3/4 border-2 rounded-md p-1 w-100 m-1">
-                    <p>Id</p>
-                    <p></p>
-                </div>
-                <div className="title w-3/4 border-2 rounded-md p-1 w-100 m-1">
-                    <p>Titre</p>
-                    <p></p>
-                </div>
-                <div className="price w-3/4 border-2 rounded-md p-1 w-100 m-1">
-                    <p>Prix</p>
-                    <p></p>
-                </div>
-                <div className="description w-3/4  border-2 rounded-md p-1 w-100 m-1">
-                    <p>Description</p>
-                    <p></p>
-                </div>
-                <div className="pt-2 w-full flex justify-center items-center flex-col">
-                    <button className="bg-custom-pink flex w-2/4 border-2 border-custom-pink rounded-md p-1 m-1 text-custom-grey justify-center">Sauvegarder</button>
-                    <button className="bg-gray-400 border-2 flex w-2/4 border-gray-400 text-custom-grey rounded-md p-1 m-1 text-custom-grey border-gray-400 justify-center">Supprimer</button>    
-                </div>
-            </div>
             
-            <div className="card w-1/5 border-2 rounded-md m-5 margin-auto flex justify-center items-center flex-col p-2">
-                <div className="id w-3/4 border-2 rounded-md p-1 w-100 m-1">
-                    <p>Id</p>
-                    <p></p>
-                </div>
-                <div className="title w-3/4 border-2 rounded-md p-1 w-100 m-1">
-                    <p>Titre</p>
-                    <p></p>
-                </div>
-                <div className="price w-3/4 border-2 rounded-md p-1 w-100 m-1">
-                    <p>Prix</p>
-                    <p></p>
-                </div>
-                <div className="description w-3/4  border-2 rounded-md p-1 w-100 m-1">
-                    <p>Description</p>
-                    <p></p>
-                </div>
-                <div className="pt-2 w-full flex justify-center items-center flex-col">
-                    <button className="bg-custom-pink flex w-2/4 border-2 border-custom-pink rounded-md p-1 m-1 text-custom-grey justify-center">Sauvegarder</button>
-                    <button className="bg-gray-400 border-2 flex w-2/4 border-gray-400 text-custom-grey rounded-md p-1 m-1 text-custom-grey border-gray-400 justify-center">Supprimer</button>    
-                </div>
-                
-            </div>
         </div>
               
   </main>
