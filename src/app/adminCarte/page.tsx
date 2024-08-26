@@ -1,9 +1,15 @@
-"use client"
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+"use client";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { AdminHeader } from '../Components/adminHeader/page';
 import { MealProps } from '../Utils/types';
+
+
+
+const adminCarte = () => {
+  const { push } = useRouter();
+  const [mealList, setMealList] = useState([]);
 
 
 
@@ -86,17 +92,172 @@ return (
 
                     )
                 })}
-            
-            
-            
         </div>
-              
-  </main>
-)
 
-}
+        <div className="card w-1/5 border-2 rounded-md m-5 margin-auto flex justify-center items-center flex-col p-2">
+          <div className="id w-4/5 border-2 rounded-md p-1 w-100 m-1">
+            <p>Id</p>
+            <p></p>
+          </div>
+          <div className="title w-4/5 border-2 rounded-md p-1 w-100 m-1">
+            <p>Titre</p>
+            <p></p>
+          </div>
+          <div className="price w-4/5 border-2 rounded-md p-1 w-100 m-1">
+            <p>Prix</p>
+            <p></p>
+          </div>
+          <div className="description w-4/5  border-2 rounded-md p-1 w-100 m-1">
+            <p>Description</p>
+            <p></p>
+          </div>
+          <div className="pt-2 w-full flex justify-center items-center flex-col">
+            <button className="bg-custom-pink flex w-2/4 border-2 border-custom-pink rounded-md p-1 m-1 text-custom-grey justify-center">
+              Sauvegarder
+            </button>
+            <button className="bg-gray-400 border-2 flex w-2/4 rounded-md p-1 m-1 text-custom-grey border-gray-400 justify-center">
+              Supprimer
+            </button>
+          </div>
+        </div>
 
-export default adminCarte
+        <div className="card w-1/5 border-2 rounded-md m-5 margin-auto flex justify-center items-center flex-col p-2">
+          <div className="id w-4/5 border-2 rounded-md p-1 w-100 m-1">
+            <p>Id</p>
+            <p></p>
+          </div>
+          <div className="title w-4/5 border-2 rounded-md p-1 w-100 m-1">
+            <p>Titre</p>
+            <p></p>
+          </div>
+          <div className="price w-4/5 border-2 rounded-md p-1 w-100 m-1">
+            <p>Prix</p>
+            <p></p>
+          </div>
+          <div className="description w-4/5  border-2 rounded-md p-1 w-100 m-1">
+            <p>Description</p>
+            <p></p>
+          </div>
+          <div className="pt-2 w-full flex justify-center items-center flex-col">
+            <button className="bg-custom-pink flex w-2/4 border-2 border-custom-pink rounded-md p-1 m-1 text-custom-grey justify-center">
+              Sauvegarder
+            </button>
+            <button className="bg-gray-400 border-2 flex w-2/4 rounded-md p-1 m-1 text-custom-grey border-gray-400 justify-center">
+              Supprimer
+            </button>
+          </div>
+        </div>
 
+        <div className="card w-1/5 border-2 rounded-md m-5 margin-auto flex justify-center items-center flex-col p-2">
+          <div className="id w-4/5 border-2 rounded-md p-1 w-100 m-1">
+            <p>Id</p>
+            <p></p>
+          </div>
+          <div className="title w-3/4 border-2 rounded-md p-1 w-100 m-1">
+            <p>Titre</p>
+            <p></p>
+          </div>
+          <div className="price w-3/4 border-2 rounded-md p-1 w-100 m-1">
+            <p>Prix</p>
+            <p></p>
+          </div>
+          <div className="description w-3/4  border-2 rounded-md p-1 w-100 m-1">
+            <p>Description</p>
+            <p></p>
+          </div>
+          <div className="pt-2 w-full flex justify-center items-center flex-col">
+            <button className="bg-custom-pink flex w-2/4 border-2 border-custom-pink rounded-md p-1 m-1 text-custom-grey justify-center">
+              Sauvegarder
+            </button>
+            <button className="bg-gray-400 border-2 flex w-2/4 rounded-md p-1 m-1 text-custom-grey border-gray-400 justify-center">
+              Supprimer
+            </button>
+          </div>
+        </div>
 
+        <div className="card w-1/5 border-2 rounded-md m-5 margin-auto flex justify-center items-center flex-col p-2">
+          <div className="id w-3/4 border-2 rounded-md p-1 w-100 m-1">
+            <p>Id</p>
+            <p></p>
+          </div>
+          <div className="title w-3/4 border-2 rounded-md p-1 w-100 m-1">
+            <p>Titre</p>
+            <p></p>
+          </div>
+          <div className="price w-3/4 border-2 rounded-md p-1 w-100 m-1">
+            <p>Prix</p>
+            <p></p>
+          </div>
+          <div className="description w-3/4  border-2 rounded-md p-1 w-100 m-1">
+            <p>Description</p>
+            <p></p>
+          </div>
+          <div className="pt-2 w-full flex justify-center items-center flex-col">
+            <button className="bg-custom-pink flex w-2/4 border-2 border-custom-pink rounded-md p-1 m-1 text-custom-grey justify-center">
+              Sauvegarder
+            </button>
+            <button className="bg-gray-400 border-2 flex w-2/4  rounded-md p-1 m-1 text-custom-grey border-gray-400 justify-center">
+              Supprimer
+            </button>
+          </div>
+        </div>
 
+        <div className="card w-1/5 border-2 rounded-md m-5 margin-auto flex justify-center items-center flex-col p-2">
+          <div className="id w-3/4 border-2 rounded-md p-1 w-100 m-1">
+            <p>Id</p>
+            <p></p>
+          </div>
+          <div className="title w-3/4 border-2 rounded-md p-1 w-100 m-1">
+            <p>Titre</p>
+            <p></p>
+          </div>
+          <div className="price w-3/4 border-2 rounded-md p-1 w-100 m-1">
+            <p>Prix</p>
+            <p></p>
+          </div>
+          <div className="description w-3/4  border-2 rounded-md p-1 w-100 m-1">
+            <p>Description</p>
+            <p></p>
+          </div>
+          <div className="pt-2 w-full flex justify-center items-center flex-col">
+            <button className="bg-custom-pink flex w-2/4 border-2 border-custom-pink rounded-md p-1 m-1 text-custom-grey justify-center">
+              Sauvegarder
+            </button>
+            <button className="bg-gray-400 border-2 flex w-2/4  rounded-md p-1 m-1 text-custom-grey border-gray-400 justify-center">
+              Supprimer
+            </button>
+          </div>
+        </div>
+
+        <div className="card w-1/5 border-2 rounded-md m-5 margin-auto flex justify-center items-center flex-col p-2">
+          <div className="id w-3/4 border-2 rounded-md p-1 w-100 m-1">
+            <p>Id</p>
+            <p></p>
+          </div>
+          <div className="title w-3/4 border-2 rounded-md p-1 w-100 m-1">
+            <p>Titre</p>
+            <p></p>
+          </div>
+          <div className="price w-3/4 border-2 rounded-md p-1 w-100 m-1">
+            <p>Prix</p>
+            <p></p>
+          </div>
+          <div className="description w-3/4  border-2 rounded-md p-1 w-100 m-1">
+            <p>Description</p>
+            <p></p>
+          </div>
+          <div className="pt-2 w-full flex justify-center items-center flex-col">
+            <button className="bg-custom-pink flex w-2/4 border-2 border-custom-pink rounded-md p-1 m-1 text-custom-grey justify-center">
+              Sauvegarder
+            </button>
+            <button className="bg-gray-400 border-2 flex w-2/4 rounded-md p-1 m-1 text-custom-grey border-gray-400 justify-center">
+              Supprimer
+            </button>
+          </div>
+        </div>
+      </div>
+    </main>
+  );
+};
+
+export default adminCarte;
