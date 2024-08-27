@@ -1,3 +1,4 @@
+import { Table } from "./Table";
 import { User } from "./User";
 
 export interface ResForm {
@@ -23,4 +24,5 @@ export interface Reservation {
   np_people: number;
   status: "pending" | "confirmed" | "cancelled";
   user: User;
+  tables: Table[];
 }

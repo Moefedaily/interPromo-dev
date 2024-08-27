@@ -106,6 +106,10 @@ const AdminReservation = () => {
               <p>{reservation.np_people}</p>
             </div>
             <div className="mb-2">
+              <p className="font-bold">Nombre de tables</p>
+              <p>{reservation.tables.length}</p>
+            </div>
+            <div className="mb-2">
               <p className="font-bold">Statut</p>
               <select
                 value={newStatuses[reservation.id] || reservation.status}
@@ -126,7 +130,7 @@ const AdminReservation = () => {
               newStatuses[reservation.id] !== reservation.status && (
                 <button
                   onClick={() => confirmStatusUpdate(reservation.id)}
-                  className="mt-2 bg-custom-pink hover:bg-gray-400 text-white font-bold py-2 px-4 rounded"
+                  className="mt-2 bg-custom-pink  border-custom-pink text-custom-grey hover:bg-gray-400 hover:text-white font-bold py-2 px-4 rounded"
                 >
                   Confirmer le changement
                 </button>
