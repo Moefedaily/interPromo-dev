@@ -9,8 +9,8 @@ const Reservation = () => {
   const router = useRouter();
   const [formData, setFormData] = useState<ResForm>({
     name: "",
-    email: "",
-    tel: "",
+    mail: "",
+    phone: "",
     date: "",
     service: "lunch",
     npPeople: 1,
@@ -20,6 +20,9 @@ const Reservation = () => {
   const [showServiceModal, setShowServiceModal] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [existingReservationId, setExistingReservationId] = useState<
+    string | null
+  >(null);
 
   useEffect(() => {
     fetchAvailability();
@@ -63,6 +66,7 @@ const Reservation = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError(null);
+    setExistingReservationId(null);
 
     const defaultTime = formData.service === "lunch" ? "12:00:00" : "19:00:00";
     const [year, month, day] = formData.date.split("-");
@@ -78,10 +82,11 @@ const Reservation = () => {
           formData.service
         );
 
-      if (reservationExists) {
+      if (reservationExists.exists) {
         setError(
           "You already have a reservation for this date and service. Would you like to modify it instead?"
         );
+        setExistingReservationId(reservationExists.id);
         return;
       }
 
@@ -119,17 +124,24 @@ const Reservation = () => {
         ) : error ? (
           <div className="bg-red-500 text-white p-4 rounded-md mb-4">
             {error}
-            {error.includes("You already have a reservation") ? (
+            {error.includes("You already have a reservation") &&
+            existingReservationId ? (
               <button
                 className="ml-4 bg-white text-red-500 px-2 py-1 rounded"
-                onClick={() => router.push("/modify-reservation")}
+                onClick={() =>
+                  router.push(`/reservationEdit/${existingReservationId}`)
+                }
               >
                 Modifier la réservation existante
               </button>
             ) : (
               <button
                 className="ml-4 bg-white text-red-500 px-2 py-1 rounded"
-                onClick={fetchAvailability}
+                onClick={() => {
+                  setError(null);
+                  setExistingReservationId(null);
+                  fetchAvailability();
+                }}
               >
                 Réessayer
               </button>
@@ -153,7 +165,7 @@ const Reservation = () => {
               id="email"
               name="email"
               placeholder="Email"
-              value={formData.email}
+              value={formData.mail}
               onChange={handleInputChange}
               required
             />
@@ -163,7 +175,7 @@ const Reservation = () => {
               id="tel"
               name="tel"
               placeholder="Téléphone"
-              value={formData.tel}
+              value={formData.phone}
               onChange={handleInputChange}
               required
             />

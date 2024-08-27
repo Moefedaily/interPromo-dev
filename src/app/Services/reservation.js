@@ -43,7 +43,7 @@ export const reservationService = {
         user_id: user.id,
       });
       console.log("Received response:", response.data);
-      return response.data.exists;
+      return response.data;
     } catch (error) {
       console.error("Error checking existing reservation:", error);
       throw new Error(
@@ -68,11 +68,38 @@ export const reservationService = {
       return response.data;
     } catch (error) {
       console.error("Error creating reservation:", error);
-      if (axios.isAxiosError(error)) {
-        console.error("Response data:", error.response?.data);
-        console.error("Response status:", error.response?.status);
-      }
       throw new Error("Failed to create reservation");
+    }
+  },
+  getReservation: async (id) => {
+    try {
+      console.log("Reservation ID:", id);
+      const response = await axiosInstance.get(`/reservation/${id}`);
+      return response.data;
+    } catch (error) {
+      throw new Error("Failed to fetch reservation");
+    }
+  },
+
+  updateReservation: async (id, reservationData) => {
+    try {
+      const response = await axiosInstance.put(
+        `/reservation/${id}/edit`,
+        reservationData
+      );
+      console.log("Reservation updated successfully:", response.data);
+      return response.data;
+    } catch (error) {
+      throw new Error("Failed to update reservation");
+    }
+  },
+
+  deleteReservation: async (id) => {
+    try {
+      const response = await axiosInstance.delete(`/reservation/${id}`);
+      return response.data;
+    } catch (error) {
+      throw new Error("Failed to delete reservation");
     }
   },
 };

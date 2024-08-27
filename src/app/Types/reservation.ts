@@ -1,7 +1,7 @@
 export interface ResForm {
     name: string;
-    email: string;
-    tel: string;
+    mail: string;
+    phone: string;
     date: string;
     service: 'lunch' | 'dinner';
     npPeople: number;
