@@ -102,4 +102,13 @@ export const reservationService = {
       throw new Error("Failed to delete reservation");
     }
   },
+
+  getReservations: async () => {
+    try {
+      const response = await axiosInstance.get("/reservations");
+      return response.data;
+    } catch (error) {
+      throw new Error("Failed to fetch reservations");
+    }
+  },
 };

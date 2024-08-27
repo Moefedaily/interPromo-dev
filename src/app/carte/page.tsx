@@ -16,7 +16,8 @@ const Carte = () => {
     const fetchMeals = async () => {
       try {
         const data = await mealService.getAllMeals();
-        setMeals(data.meals);
+        console.log("Meal data:", data);
+        setMeals(data);
         setLoading(false);
       } catch (err) {
         setError("Failed to fetch meals");
@@ -49,10 +50,7 @@ const Carte = () => {
       </section>
       <section className="flex flex-wrap p-24">
         {meals.map((meal: Meal) => (
-          <div
-            key={meal.id}
-            className="sm:w-1/2 md:w-1/3 lg:w-1/4 p-4"
-          >
+          <div key={meal.id} className="sm:w-1/2 md:w-1/3 lg:w-1/4 p-4">
             <div>
               <div className="flex justify-center items-center">
                 <img

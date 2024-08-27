@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { Header } from "../../Components/header/page";
 import { reservationService } from "../../Services/reservation";
 import { ResForm, Availability } from "../../Types/reservation";
+import { Table } from "@/app/Types/Table";
 
 const EditReservation = ({ params }: { params: { id: string } }) => {
   const router = useRouter();
@@ -22,6 +23,7 @@ const EditReservation = ({ params }: { params: { id: string } }) => {
   const [showServiceModal, setShowServiceModal] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [selectedTables, setSelectedTables] = useState<number[]>([]);
 
   useEffect(() => {
     fetchReservation();
@@ -42,6 +44,7 @@ const EditReservation = ({ params }: { params: { id: string } }) => {
       setFormData(formattedReservation);
       setInitialFormData(formattedReservation);
       setSelectedDate(reservation.date.split("T")[0]);
+      setSelectedTables(reservation.tables.map((table: Table) => table.id));
     } catch (error) {
       setError("Failed to fetch reservation details");
     }
@@ -85,13 +88,14 @@ const EditReservation = ({ params }: { params: { id: string } }) => {
       "0"
     )}T${defaultTime}`;
 
-    const updatedData: Partial<ResForm> = {};
+    const updatedData: Partial<ResForm> & { table_ids?: number[] } = {};
     (Object.keys(formData) as Array<keyof ResForm>).forEach((key) => {
       if (formData[key] !== initialFormData?.[key]) {
         updatedData[key] = formData[key];
       }
     });
     updatedData.date = formattedDate;
+    updatedData.table_ids = selectedTables;
 
     try {
       await reservationService.updateReservation(id, updatedData);
@@ -100,6 +104,7 @@ const EditReservation = ({ params }: { params: { id: string } }) => {
       setError("Failed to update reservation");
     }
   };
+
   const handleDelete = async () => {
     if (window.confirm("Are you sure you want to delete this reservation?")) {
       try {
@@ -145,7 +150,7 @@ const EditReservation = ({ params }: { params: { id: string } }) => {
           />
           <input
             className="bg-custom-grey border-white border-2 py-2 px-4 m-4 rounded-md w-full"
-            type="mail"
+            type="email"
             id="mail"
             name="mail"
             placeholder="Email"
@@ -155,7 +160,7 @@ const EditReservation = ({ params }: { params: { id: string } }) => {
           />
           <input
             className="bg-custom-grey border-white border-2 py-2 px-4 m-4 rounded-md w-full"
-            type="phone"
+            type="tel"
             id="phone"
             name="phone"
             placeholder="Téléphone"

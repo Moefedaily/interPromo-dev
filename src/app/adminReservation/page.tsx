@@ -1,266 +1,136 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { AdminHeader } from "../Components/adminHeader/page";
-import { mealService } from "../Services/meal";
-import { CreateMealDto, Meal } from "../Types/meal";
-import { Oval } from "react-loader-spinner";
+import { reservationService } from "../Services/reservation";
+import { Reservation, ResForm } from "../Types/reservation";
 
-const AdminCarte = () => {
-  const { push } = useRouter();
-  const [mealList, setMealList] = useState<Meal[]>([]);
-  const [editingMeal, setEditingMeal] = useState<Meal | null>(null);
-  const [newMeal, setNewMeal] = useState<CreateMealDto>({
-    name: "",
-    description: "",
-    price: 0,
-    picture: "",
-  });
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+const AdminReservation = () => {
+  const [reservations, setReservations] = useState<Reservation[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  const [showCreationBox, setShowCreationBox] = useState<boolean>(false);
+  const [newStatuses, setNewStatuses] = useState<{
+    [key: number]: Reservation["status"];
+  }>({});
+  const { push } = useRouter();
 
   useEffect(() => {
-    fetchMeals();
+    fetchReservations();
   }, []);
 
-  const fetchMeals = async () => {
-    setIsLoading(true);
-    setError(null);
+  const fetchReservations = async (): Promise<void> => {
     try {
-      const response = await mealService.getAllMeals();
-      setMealList(response.meals);
-    } catch (err) {
-      setError("Failed to fetch meals. Please try again.");
-      console.error("Error fetching meals:", err);
-    } finally {
-      setIsLoading(false);
+      const data = await reservationService.getReservations();
+      console.log("Reservation data:", data);
+      setReservations(data);
+      setLoading(false);
+    } catch (error) {
+      setError(
+        "Error fetching reservations: " +
+          (error instanceof Error ? error.message : "Unknown error")
+      );
+      setLoading(false);
     }
   };
 
-  const handleEdit = (meal: Meal) => {
-    setEditingMeal(meal);
+  const handleStatusChange = (id: number, status: Reservation["status"]) => {
+    setNewStatuses((prev) => ({ ...prev, [id]: status }));
   };
 
-  const handleSave = async (meal: Meal | CreateMealDto) => {
-    setIsLoading(true);
-    setError(null);
+  const confirmStatusUpdate = async (id: number): Promise<void> => {
+    if (!newStatuses[id]) return;
+
     try {
-      let updatedMeal;
-      const mealToSave = {
-        ...meal,
-      };
-      if ("id" in meal) {
-        updatedMeal = await mealService.updateMeal(meal.id, mealToSave);
-      } else {
-        updatedMeal = await mealService.createMeal(mealToSave);
-      }
-      await fetchMeals();
-      setEditingMeal(null);
-      setNewMeal({ name: "", description: "", price: 0, picture: "" });
-      setShowCreationBox(false);
-    } catch (err) {
-      setError("Failed to save meal. Please try again.");
-      console.error("Error saving meal:", err);
-    } finally {
-      setIsLoading(false);
+      await reservationService.updateReservation(id, {
+        status: newStatuses[id],
+      });
+      fetchReservations();
+      setNewStatuses((prev) => {
+        const updated = { ...prev };
+        delete updated[id];
+        return updated;
+      });
+    } catch (error) {
+      setError(
+        "Error updating reservation status: " +
+          (error instanceof Error ? error.message : "Unknown error")
+      );
     }
   };
 
-  const handleDelete = async (id: number) => {
-    if (window.confirm("Are you sure you want to delete this meal?")) {
-      setIsLoading(true);
-      setError(null);
-      try {
-        await mealService.deleteMeal(id);
-        await fetchMeals();
-      } catch (err) {
-        setError("Failed to delete meal. Please try again.");
-        console.error("Error deleting meal:", err);
-      } finally {
-        setIsLoading(false);
-      }
-    }
-  };
-
-  if (isLoading) {
-    return (
-      <div className="flex justify-center items-center h-screen">
-        <Oval
-          height={80}
-          width={80}
-          color="#FF8DDC"
-          wrapperStyle={{}}
-          wrapperClass=""
-          visible={true}
-          ariaLabel="oval-loading"
-          secondaryColor="#333333"
-          strokeWidth={2}
-          strokeWidthSecondary={2}
-        />
-      </div>
-    );
-  }
-
-  if (error) return <div>{error}</div>;
+  if (loading)
+    return <div className="text-white text-center mt-8">Loading...</div>;
+  if (error)
+    return <div className="text-red-500 text-center mt-8">{error}</div>;
 
   return (
-    <main className="bg-custom-grey">
+    <main className="bg-custom-grey min-h-screen">
       <AdminHeader />
       <div className="flex items-center justify-between m-6">
         <div className="flex-col m-auto flex justify-center items-center pt-6">
-          <p className="text-white text-4xl font-bold flex">Carte</p>
-          <button
-            onClick={() => setShowCreationBox(!showCreationBox)}
-            className="bg-custom-pink flex border-2 mt-3 border-custom-pink text-custom-grey rounded-md p-1 m-1 justify-center w-full"
-          >
-            {showCreationBox ? "Cacher" : "Ajouter un plat"}
-          </button>
+          <p className="text-white text-4xl font-bold flex">Réservations</p>
         </div>
       </div>
-
-      {showCreationBox && (
-        <div className="card w-1/5 border-2 rounded-md mx-auto my-auto mb-20 margin-auto flex justify-center items-center flex-col p-10">
-          <input
-            className="w-4/5 border-2 rounded-md p-1 m-1 text-black"
-            placeholder="Nom"
-            value={newMeal.name}
-            onChange={(e) => setNewMeal({ ...newMeal, name: e.target.value })}
-          />
-          <input
-            className="w-4/5 border-2 rounded-md p-1 m-1 text-black"
-            placeholder="Prix"
-            type="number"
-            value={newMeal.price}
-            onChange={(e) =>
-              setNewMeal({ ...newMeal, price: parseFloat(e.target.value) })
-            }
-          />
-          <textarea
-            className="w-4/5 border-2 rounded-md p-1 m-1 text-black"
-            placeholder="Description"
-            value={newMeal.description}
-            onChange={(e) =>
-              setNewMeal({ ...newMeal, description: e.target.value })
-            }
-          />
-          <input
-            className="w-4/5 border-2 rounded-md p-1 m-1 text-black"
-            placeholder="URL de l'image"
-            value={newMeal.picture}
-            onChange={(e) =>
-              setNewMeal({ ...newMeal, picture: e.target.value })
-            }
-          />
-          <button
-            onClick={() => handleSave(newMeal)}
-            className="bg-custom-pink flex w-2/4 border-2 border-custom-pink rounded-md p-1 m-1 text-custom-grey justify-center"
-          >
-            Ajouter
-          </button>
-        </div>
-      )}
-
-      <div className="cards text-white flex-raw flex flex-wrap content-between justify-center items-center">
-        {mealList.map((meal) => (
+      <div className="cards text-white flex flex-wrap justify-center items-start">
+        {reservations.map((reservation: Reservation) => (
           <div
-            key={meal.id}
-            className="card w-1/5 border-2 rounded-md m-5 margin-auto flex justify-center items-center flex-col p-2"
+            key={reservation.id}
+            className="card w-64 border-2 rounded-md m-5 flex flex-col p-4"
           >
-            <div className="picture w-4/5 border-2 rounded-md p-1 w-100 m-1">
-              <img
-                src={meal.picture}
-                className="w-full h-auto"
-                alt={meal.name}
-              />
+            <div className="mb-2">
+              <p className="font-bold">N° de réservation</p>
+              <p>{reservation.id}</p>
             </div>
-
-            {editingMeal && editingMeal.id === meal.id ? (
-              <>
-                <input
-                  className="w-4/5 border-2 rounded-md p-1 m-1 text-black"
-                  placeholder="Nom"
-                  value={editingMeal.name}
-                  onChange={(e) =>
-                    setEditingMeal({ ...editingMeal, name: e.target.value })
-                  }
-                />
-                <input
-                  className="w-4/5 border-2 rounded-md p-1 m-1 text-black"
-                  placeholder="Prix"
-                  type="number"
-                  step="0.01"
-                  value={editingMeal.price}
-                  onChange={(e) =>
-                    setEditingMeal({
-                      ...editingMeal,
-                      price: parseFloat(e.target.value),
-                    })
-                  }
-                />
-                <textarea
-                  className="w-4/5 border-2 rounded-md p-1 m-1 text-black"
-                  placeholder="Description"
-                  value={editingMeal.description}
-                  onChange={(e) =>
-                    setEditingMeal({
-                      ...editingMeal,
-                      description: e.target.value,
-                    })
-                  }
-                />
-                <input
-                  className="w-4/5 border-2 rounded-md p-1 m-1 text-black"
-                  placeholder="URL de l'image"
-                  value={editingMeal.picture}
-                  onChange={(e) =>
-                    setEditingMeal({
-                      ...editingMeal,
-                      picture: e.target.value,
-                    })
-                  }
-                />
-              </>
-            ) : (
-              <>
-                <div className="title w-4/5 border-2 rounded-md p-1 w-100 m-1">
-                  <p>Nom</p>
-                  <p>{meal.name}</p>
-                </div>
-                <div className="price w-4/5 border-2 rounded-md p-1 w-100 m-1">
-                  <p>Prix</p>
-                  <p>{meal.price}€</p>
-                </div>
-                <div className="description w-4/5 border-2 rounded-md p-1 w-100 m-1">
-                  <p>Description</p>
-                  <p>{meal.description}</p>
-                </div>
-              </>
-            )}
-
-            <div className="pt-2 w-full flex justify-center items-center flex-col">
-              {editingMeal && editingMeal.id === meal.id ? (
+            <div className="mb-2">
+              <p className="font-bold">Nom</p>
+              <p>{`${reservation.user.name}`}</p>
+            </div>
+            <div className="mb-2">
+              <p className="font-bold">Mail</p>
+              <p>{reservation.user.mail}</p>
+            </div>
+            <div className="mb-2">
+              <p className="font-bold">Téléphone</p>
+              <p>{reservation.user.phone}</p>
+            </div>
+            <div className="mb-2">
+              <p className="font-bold">Date de réservation</p>
+              <p>{new Date(reservation.date).toLocaleDateString()}</p>
+            </div>
+            <div className="mb-2">
+              <p className="font-bold">Heure de réservation</p>
+              <p>{reservation.service}</p>
+            </div>
+            <div className="mb-2">
+              <p className="font-bold">Nombre de personnes</p>
+              <p>{reservation.np_people}</p>
+            </div>
+            <div className="mb-2">
+              <p className="font-bold">Statut</p>
+              <select
+                value={newStatuses[reservation.id] || reservation.status}
+                onChange={(e) =>
+                  handleStatusChange(
+                    reservation.id,
+                    e.target.value as Reservation["status"]
+                  )
+                }
+                className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm text-black"
+              >
+                <option value="pending">En attente</option>
+                <option value="confirmed">Confirmé</option>
+                <option value="cancelled">Annulé</option>
+              </select>
+            </div>
+            {newStatuses[reservation.id] &&
+              newStatuses[reservation.id] !== reservation.status && (
                 <button
-                  onClick={() => handleSave(editingMeal)}
-                  className="bg-custom-pink flex w-2/4 border-2 border-custom-pink rounded-md p-1 m-1 text-custom-grey justify-center"
+                  onClick={() => confirmStatusUpdate(reservation.id)}
+                  className="mt-2 bg-custom-pink hover:bg-gray-400 text-white font-bold py-2 px-4 rounded"
                 >
-                  Sauvegarder
-                </button>
-              ) : (
-                <button
-                  onClick={() => handleEdit(meal)}
-                  className="bg-custom-pink flex w-2/4 border-2 border-custom-pink rounded-md p-1 m-1 text-custom-grey justify-center"
-                >
-                  Modifier
+                  Confirmer le changement
                 </button>
               )}
-              <button
-                onClick={() => handleDelete(meal.id)}
-                className="bg-gray-400 border-2 flex w-2/4 rounded-md p-1 m-1 text-custom-grey border-gray-400 justify-center"
-              >
-                Supprimer
-              </button>
-            </div>
           </div>
         ))}
       </div>
@@ -268,4 +138,4 @@ const AdminCarte = () => {
   );
 };
 
-export default AdminCarte;
+export default AdminReservation;

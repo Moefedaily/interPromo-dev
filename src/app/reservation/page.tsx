@@ -161,9 +161,9 @@ const Reservation = () => {
             />
             <input
               className="bg-custom-grey border-white border-2 py-2 px-4 m-4 rounded-md w-full"
-              type="email"
-              id="email"
-              name="email"
+              type="mail"
+              id="mail"
+              name="mail"
               placeholder="Email"
               value={formData.mail}
               onChange={handleInputChange}
@@ -171,9 +171,9 @@ const Reservation = () => {
             />
             <input
               className="bg-custom-grey border-white border-2 py-2 px-4 m-4 rounded-md w-full"
-              type="tel"
-              id="tel"
-              name="tel"
+              type="phone"
+              id="phone"
+              name="phone"
               placeholder="Téléphone"
               value={formData.phone}
               onChange={handleInputChange}
