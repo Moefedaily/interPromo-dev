@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { reservationService } from "../Services/reservation";
 import { Reservation, ResForm } from "../Types/reservation";
 import { Oval } from "react-loader-spinner";
-import Header from "../Components/header/page";
+import Header from "../Components/header/Header";
 
 const AdminReservation = () => {
   const [reservations, setReservations] = useState<Reservation[]>([]);
