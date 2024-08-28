@@ -7,7 +7,6 @@ import { Oval } from "react-loader-spinner";
 import Header from "../Components/header/page";
 
 const AdminCarte = () => {
-  const { push } = useRouter();
   const [mealList, setMealList] = useState<Meal[]>([]);
   const [editingMeal, setEditingMeal] = useState<Meal | null>(null);
   const [newMeal, setNewMeal] = useState<CreateMealDto>({
