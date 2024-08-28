@@ -1,4 +1,4 @@
-import { Table } from "./Table";
+import { Table } from "./table";
 import { User } from "./User";
 
 export interface ResForm {

@@ -1,10 +1,10 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { AdminHeader } from "../Components/adminHeader/page";
 import { mealService } from "../Services/meal";
 import { CreateMealDto, Meal } from "../Types/meal";
 import { Oval } from "react-loader-spinner";
+import Header from "../Components/header/page";
 
 const AdminCarte = () => {
   const { push } = useRouter();
@@ -106,7 +106,7 @@ const AdminCarte = () => {
 
   return (
     <main className="bg-custom-grey">
-      <AdminHeader />
+      <Header />
       <div className="flex items-center justify-between m-6">
         <div className="flex-col m-auto flex justify-center items-center pt-6">
           <p className="text-white text-4xl font-bold flex">Carte</p>

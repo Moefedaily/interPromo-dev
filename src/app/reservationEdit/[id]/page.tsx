@@ -4,7 +4,8 @@ import { useRouter } from "next/navigation";
 import { Header } from "../../Components/header/page";
 import { reservationService } from "../../Services/reservation";
 import { ResForm, Availability } from "../../Types/reservation";
-import { Table } from "@/app/Types/Table";
+import { Table } from "@/app/Types/table";
+import { Oval } from "react-loader-spinner";
 
 const EditReservation = ({ params }: { params: { id: string } }) => {
   const router = useRouter();
@@ -124,7 +125,22 @@ const EditReservation = ({ params }: { params: { id: string } }) => {
   };
 
   if (isLoading) {
-    return <p>Loading...</p>;
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <Oval
+          height={80}
+          width={80}
+          color="#FF8DDC"
+          wrapperStyle={{}}
+          wrapperClass=""
+          visible={true}
+          ariaLabel="oval-loading"
+          secondaryColor="#333333"
+          strokeWidth={2}
+          strokeWidthSecondary={2}
+        />
+      </div>
+    );
   }
 
   return (

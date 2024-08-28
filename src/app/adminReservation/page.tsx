@@ -1,9 +1,10 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { AdminHeader } from "../Components/adminHeader/page";
 import { reservationService } from "../Services/reservation";
 import { Reservation, ResForm } from "../Types/reservation";
+import { Oval } from "react-loader-spinner";
+import Header from "../Components/header/page";
 
 const AdminReservation = () => {
   const [reservations, setReservations] = useState<Reservation[]>([]);
@@ -59,13 +60,28 @@ const AdminReservation = () => {
   };
 
   if (loading)
-    return <div className="text-white text-center mt-8">Loading...</div>;
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <Oval
+          height={80}
+          width={80}
+          color="#FF8DDC"
+          wrapperStyle={{}}
+          wrapperClass=""
+          visible={true}
+          ariaLabel="oval-loading"
+          secondaryColor="#333333"
+          strokeWidth={2}
+          strokeWidthSecondary={2}
+        />
+      </div>
+    );
   if (error)
     return <div className="text-red-500 text-center mt-8">{error}</div>;
 
   return (
     <main className="bg-custom-grey min-h-screen">
-      <AdminHeader />
+      <Header />
       <div className="flex items-center justify-between m-6">
         <div className="flex-col m-auto flex justify-center items-center pt-6">
           <p className="text-white text-4xl font-bold flex">Réservations</p>

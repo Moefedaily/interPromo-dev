@@ -4,6 +4,7 @@ import { ResForm, Availability } from "../Types/reservation";
 import { reservationService } from "../Services/reservation";
 import { Header } from "../Components/header/page";
 import { useRouter } from "next/navigation";
+import { Oval } from "react-loader-spinner";
 
 const Reservation = () => {
   const router = useRouter();
@@ -120,7 +121,20 @@ const Reservation = () => {
       <section className="flex flex-col justify-center items-center m-8">
         <h2 className="text-5xl font-bold m-16">Réservation</h2>
         {isLoading ? (
-          <p>Chargement des disponibilités...</p>
+          <div className="flex justify-center items-center h-screen">
+            <Oval
+              height={80}
+              width={80}
+              color="#FF8DDC"
+              wrapperStyle={{}}
+              wrapperClass=""
+              visible={true}
+              ariaLabel="oval-loading"
+              secondaryColor="#333333"
+              strokeWidth={2}
+              strokeWidthSecondary={2}
+            />
+          </div>
         ) : error ? (
           <div className="bg-red-500 text-white p-4 rounded-md mb-4">
             {error}

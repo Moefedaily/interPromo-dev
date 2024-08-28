@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { Header } from "../Components/header/page";
 import { mealService } from "../Services/meal";
 import { Meal } from "../Types/meal";
+import { Oval } from "react-loader-spinner";
 
 const Carte = () => {
   const { push } = useRouter();
@@ -27,7 +28,23 @@ const Carte = () => {
     fetchMeals();
   }, []);
 
-  if (loading) return <div>Loading...</div>;
+  if (loading)
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <Oval
+          height={80}
+          width={80}
+          color="#FF8DDC"
+          wrapperStyle={{}}
+          wrapperClass=""
+          visible={true}
+          ariaLabel="oval-loading"
+          secondaryColor="#333333"
+          strokeWidth={2}
+          strokeWidthSecondary={2}
+        />
+      </div>
+    );
   if (error) return <div>{error}</div>;
 
   return (

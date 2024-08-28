@@ -1,39 +1,49 @@
 "use client";
+
 import React, { useState } from "react";
 import { Header } from "../Components/header/page";
-import { authService } from "../Services/auth";
 import { useRouter } from "next/navigation";
 import axios from "axios";
+import { authService } from "../Services/auth";
 
-const Login = () => {
+const Registration = () => {
   const router = useRouter();
   const [formData, setFormData] = useState({
     mail: "",
     password: "",
+    name: "",
+    phone: "",
   });
   const [error, setError] = useState<string | null>(null);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError(null);
+
     try {
-      const user = await authService.login(formData);
-      console.log("Login successful:", user);
-      router.push("/");
+      const response = await authService.register(formData);
+      console.log("Registration successful:", response);
+      router.push("/connexion");
     } catch (error) {
       if (axios.isAxiosError(error) && error.response) {
         setError(
-          error.response.data.message || "An error occurred during login."
+          error.response.data.message ||
+            "An error occurred during registration."
         );
       } else {
         setError("An unexpected error occurred. Please try again.");
       }
-      console.error("Login error:", error);
+      console.error("Registration error:", error);
     }
   };
 
@@ -41,7 +51,7 @@ const Login = () => {
     <main className="bg-custom-grey min-h-screen text-white">
       <Header />
       <section className="flex flex-col justify-center items-center m-8">
-        <h2 className="text-5xl font-bold m-16">Connexion</h2>
+        <h2 className="text-5xl font-bold m-16">Inscription</h2>
         {error && (
           <div className="bg-red-500 text-white p-4 rounded-md mb-4">
             {error}
@@ -53,18 +63,38 @@ const Login = () => {
             type="email"
             id="mail"
             name="mail"
-            placeholder="Identifiant"
+            placeholder="Email"
             value={formData.mail}
             onChange={handleInputChange}
             required
           />
           <input
-            className="bg-custom-grey border-white p-2 border-2 py-2 px-16 m-4 rounded-md w-full"
+            className="bg-custom-grey border-white border-2 py-2 px-16 m-4 rounded-md w-full"
             type="password"
-            placeholder="Mot de passe"
             id="password"
             name="password"
+            placeholder="Mot de passe"
             value={formData.password}
+            onChange={handleInputChange}
+            required
+          />
+          <input
+            className="bg-custom-grey border-white border-2 py-2 px-16 m-4 rounded-md w-full"
+            type="text"
+            id="name"
+            name="name"
+            placeholder="Nom"
+            value={formData.name}
+            onChange={handleInputChange}
+            required
+          />
+          <input
+            className="bg-custom-grey border-white border-2 py-2 px-16 m-4 rounded-md w-full"
+            type="tel"
+            id="phone"
+            name="phone"
+            placeholder="Téléphone"
+            value={formData.phone}
             onChange={handleInputChange}
             required
           />
@@ -73,7 +103,7 @@ const Login = () => {
               className="bg-white text-black rounded-md px-8 py-2 m-8"
               type="submit"
             >
-              Se connecter
+              S'inscrire
             </button>
           </div>
         </form>
@@ -82,4 +112,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Registration;
