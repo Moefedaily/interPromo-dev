@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { authService } from "../Services/auth";
 import { User } from "../Types/User";
 import { Oval } from "react-loader-spinner";
-import Header from "../Components/Header/Header";
+import Header from "../Components/Header";
 
 const Profil = () => {
   const router = useRouter();

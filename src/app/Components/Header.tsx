@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { authService } from "@/app/Services/auth";
-import NavButton from "../NavButton/NavButton";
+import NavButton from "./NavButton";
 
 export const Header = () => {
   const { push } = useRouter();

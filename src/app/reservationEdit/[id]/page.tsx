@@ -5,7 +5,7 @@ import { reservationService } from "../../Services/reservation";
 import { ResForm, Availability } from "../../Types/reservation";
 import { Table } from "@/app/Types/table";
 import { Oval } from "react-loader-spinner";
-import Header from "@/app/Components/Header/Header";
+import Header from "@/app/Components/Header";
 
 const EditReservation = ({ params }: { params: { id: string } }) => {
   const router = useRouter();
