@@ -1,11 +1,11 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { Header } from "../../Components/header/page";
 import { reservationService } from "../../Services/reservation";
 import { ResForm, Availability } from "../../Types/reservation";
 import { Table } from "@/app/Types/table";
 import { Oval } from "react-loader-spinner";
+import Header from "@/app/Components/header/Header";
 
 const EditReservation = ({ params }: { params: { id: string } }) => {
   const router = useRouter();
@@ -147,7 +147,7 @@ const EditReservation = ({ params }: { params: { id: string } }) => {
 
   return (
     <main className="bg-custom-grey min-h-screen text-white">
-      <Header />
+      <Header/>
       <section className="flex flex-col justify-center items-center m-8">
         <h2 className="text-5xl font-bold m-16">Modifier la Réservation</h2>
         {error && (

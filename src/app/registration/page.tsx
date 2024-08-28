@@ -1,10 +1,10 @@
 "use client";
 
 import React, { useState } from "react";
-import { Header } from "../Components/header/page";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import { authService } from "../Services/auth";
+import Header from "../Components/header/Header";
 
 const Registration = () => {
   const router = useRouter();

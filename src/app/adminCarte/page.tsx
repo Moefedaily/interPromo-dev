@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { mealService } from "../Services/meal";
 import { CreateMealDto, Meal } from "../Types/meal";
 import { Oval } from "react-loader-spinner";
-import Header from "../Components/header/page";
+import Header from "../Components/header/Header";
 
 const AdminCarte = () => {
   const [mealList, setMealList] = useState<Meal[]>([]);

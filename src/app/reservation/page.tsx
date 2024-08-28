@@ -2,9 +2,9 @@
 import React, { useState, useEffect } from "react";
 import { ResForm, Availability } from "../Types/reservation";
 import { reservationService } from "../Services/reservation";
-import { Header } from "../Components/header/page";
 import { useRouter } from "next/navigation";
 import { Oval } from "react-loader-spinner";
+import Header from "../Components/header/Header";
 
 const Reservation = () => {
   const router = useRouter();

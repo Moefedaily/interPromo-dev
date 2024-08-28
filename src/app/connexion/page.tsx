@@ -1,9 +1,9 @@
 "use client";
 import React, { useState } from "react";
-import { Header } from "../Components/header/page";
 import { authService } from "../Services/auth";
 import { useRouter } from "next/navigation";
 import axios from "axios";
+import Header from "../Components/header/Header";
 
 const Login = () => {
   const router = useRouter();
@@ -39,7 +39,7 @@ const Login = () => {
 
   return (
     <main className="bg-custom-grey min-h-screen text-white">
-      <Header />
+      <Header/>
       <section className="flex flex-col justify-center items-center m-8">
         <h2 className="text-5xl font-bold m-16">Connexion</h2>
         {error && (

@@ -1,10 +1,10 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { Header } from "../Components/header/page";
 import { authService } from "../Services/auth";
 import { User } from "../Types/User";
 import { Oval } from "react-loader-spinner";
+import Header from "../Components/header/Header";
 
 const Profil = () => {
   const router = useRouter();
