@@ -92,7 +92,9 @@ const EditReservation = ({ params }: { params: { id: string } }) => {
     const updatedData: Partial<ResForm> & { table_ids?: number[] } = {};
     (Object.keys(formData) as Array<keyof ResForm>).forEach((key) => {
       if (formData[key] !== initialFormData?.[key]) {
-        updatedData[key] = formData[key];
+        if (key in updatedData) {
+          (updatedData as any)[key] = formData[key];
+        }
       }
     });
     updatedData.date = formattedDate;

@@ -1,5 +1,5 @@
-export interface NavButtonPropos {
+export type NavButtonPropos = {
   onClick: () => void;
   children: React.ReactNode;
   className?: string;
-}
+};
