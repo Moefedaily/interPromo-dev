@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import { authService } from "../Services/auth";
-import Header from "../Components/header/Header";
+import Header from "../Components/Header/Header";
 
 const Registration = () => {
   const router = useRouter();

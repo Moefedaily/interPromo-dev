@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { mealService } from "../Services/meal";
 import { Meal } from "../Types/meal";
 import { Oval } from "react-loader-spinner";
-import Header from "../Components/header/Header";
+import Header from "../Components/Header/Header";
 
 const Carte = () => {
   const { push } = useRouter();
