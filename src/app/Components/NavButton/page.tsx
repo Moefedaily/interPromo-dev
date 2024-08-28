@@ -1,8 +1,5 @@
-interface NavButtonPropos {
-  onClick: () => void;
-  children: React.ReactNode;
-  className?: string;
-}
+import { NavButtonPropos } from "@/app/Types/NavButton";
+
 const NavButton = ({ onClick, children, className = "" }: NavButtonPropos) => (
   <button
     onClick={onClick}
