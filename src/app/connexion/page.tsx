@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { authService } from "../Services/auth";
 import { useRouter } from "next/navigation";
 import axios from "axios";
-import Header from "../Components/header/Header";
+import Header from "../Components/Header/Header";
 
 const Login = () => {
   const router = useRouter();
