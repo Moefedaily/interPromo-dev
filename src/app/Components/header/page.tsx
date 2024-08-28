@@ -1,8 +1,8 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import NavButton from "../NavButton/page";
 import { authService } from "@/app/Services/auth";
+import NavButton from "../NavButton/NavButton";
 
 export const Header = () => {
   const { push } = useRouter();
