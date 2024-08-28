@@ -52,4 +52,15 @@ export const mealService = {
       throw new Error("Failed to delete meal");
     }
   },
+  searchMeals: async (categories) => {
+    try {
+      const response = await axiosIns.get(`/meal/search`, {
+        params: { categories: categories },
+      });
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching meals:", error);
+      throw error;
+    }
+  },
 };
