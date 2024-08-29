@@ -37,7 +37,7 @@ export const Header = () => {
           RESTAURANT LE SEOUL
         </h1>
         <div className="flex items-center mb-4 lg:mb-0">
-          <img src="logo.svg" alt="logo" className="h-16 w-auto" />
+          <img src="Logo.svg" alt="logo" className="h-16 w-auto" />
         </div>
         <nav className="flex flex-wrap justify-center lg:justify-end items-center gap-4">
           {isAdmin && (
